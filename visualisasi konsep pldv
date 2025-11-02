@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rey dan Beny di VN Coffee Shop</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF8C69 0%, #FFB347 50%, #FFA500 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            min-height: 600px;
+        }
+
+        .coffee-shop {
+            position: absolute;
+            right: 10%;
+            top: 20%;
+            width: 300px;
+            height: 250px;
+            background: linear-gradient(145deg, #2C1810, #3E2723);
+            border-radius: 15px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+            border: 3px solid #1A0E0A;
+        }
+
+        .shop-roof {
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            width: 340px;
+            height: 60px;
+            background: #654321;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .shop-sign {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #8B4513;
+            border: 3px solid #FF8C00;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3); }
+            to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.5); }
+        }
+
+        .shop-door {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 120px;
+            background: #DEB887;
+            border-radius: 10px 10px 0 0;
+            border: 3px solid #8B4513;
+        }
+
+        .shop-window {
+            position: absolute;
+            top: 60px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: #87CEEB;
+            border: 4px solid #4682B4;
+            border-radius: 8px;
+        }
+
+        .shop-window:nth-child(5) {
+            left: 210px;
+        }
+
+        .cafe-table {
+            position: absolute;
+            bottom: 10%;
+            right: 25%;
+            width: 80px;
+            height: 50px;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            border-radius: 10px;
+            border: 2px solid #654321;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .cafe-table.show {
+            opacity: 1;
+        }
+
+        .cafe-table::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            width: 60px;
+            height: 15px;
+            background: linear-gradient(145deg, #D2691E, #CD853F);
+            border-radius: 8px;
+            border: 1px solid #8B4513;
+        }
+
+        .window-light {
+            position: absolute;
+            bottom: 15%;
+            right: 15%;
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.2));
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            filter: blur(10px);
+        }
+
+        .window-light.show {
+            opacity: 1;
+        }
+
+        .purchased-items {
+            position: absolute;
+            background: linear-gradient(145deg, #FFF8DC, #F5DEB3);
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #DAA520;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 180px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .rey-items {
+            bottom: 35%;
+            left: 5%;
+        }
+
+        .beny-items {
+            bottom: 35%;
+            right: 5%;
+        }
+
+        .purchased-items.show {
+            opacity: 1;
+        }
+
+        .items-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .item-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .donut, .milk {
+            font-size: 32px;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            border: 2px solid #DAA520;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .milk {
+            animation-delay: 0.5s;
+        }
+
+        .donut:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .items-description {
+            font-size: 14px;
+            color: #654321;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .items-price {
+            font-size: 16px;
+            color: #8B0000;
+            font-weight: bold;
+            margin-top: 8px;
+            padding: 5px 10px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            border: 2px solid #DAA520;
+        }
+
+        .character {
+            position: absolute;
+            width: 90px;
+            height: 140px;
+            transition: all 2s ease-in-out;
+        }
+
+        .rey {
+            left: 5%;
+            bottom: 25%;
+        }
+
+        .beny {
+            left: 15%;
+            bottom: 25%;
+        }
+
+        .character-head {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin: 0 auto 5px;
+            position: relative;
+            border: 2px solid #8B4513;
+        }
+
+        .rey .character-head {
+            background: linear-gradient(145deg, #FDBCB4, #F4A460);
+        }
+
+        .beny .character-head {
+            background: linear-gradient(145deg, #DEB887, #CD853F);
+        }
+
+        .character-hair {
+            position: absolute;
+            top: -12px;
+            left: 3px;
+            width: 45px;
+            height: 35px;
+            border-radius: 25px 25px 8px 8px;
+            border: 2px solid #654321;
+        }
+
+        .rey .character-hair {
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+        }
+
+        .beny .character-hair {
+            background: linear-gradient(145deg, #2F4F4F, #708090);
+        }
+
+        .character-eyes {
+            position: absolute;
+            top: 18px;
+            left: 13px;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #000 40%, #333 100%);
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #000;
+        }
+
+        .character-eyes::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 white;
+        }
+
+        .character-smile {
+            position: absolute;
+            top: 32px;
+            left: 20px;
+            width: 16px;
+            height: 8px;
+            border: 3px solid #8B4513;
+            border-top: none;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .character-nose {
+            position: absolute;
+            top: 26px;
+            left: 26px;
+            width: 4px;
+            height: 4px;
+            background: #CD853F;
+            border-radius: 50%;
+        }
+
+        .character-body {
+            width: 50px;
+            height: 55px;
+            margin: 0 auto;
+            border-radius: 12px;
+            border: 2px solid #333;
+            position: relative;
+        }
+
+        .rey .character-body {
+            background: linear-gradient(145deg, #808080, #A9A9A9);
+        }
+
+        .beny .character-body {
+            background: linear-gradient(145deg, #87CEEB, #4682B4);
+        }
+
+        .character-arms {
+            position: absolute;
+            top: 10px;
+            left: -15px;
+            width: 12px;
+            height: 35px;
+            background: #FDBCB4;
+            border-radius: 6px;
+            border: 1px solid #8B4513;
+        }
+
+        .character-arms::after {
+            content: '';
+            position: absolute;
+            right: -25px;
+            width: 12px;
+            height: 35px;
+            background: #FDBCB4;
+            border-radius: 6px;
+            border: 1px solid #8B4513;
+        }
+
+        .character-legs {
+            width: 35px;
+            height: 25px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            border-radius: 0 0 12px 12px;
+            border: 2px solid #654321;
+            position: relative;
+        }
+
+        .character-legs::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 5px;
+            width: 8px;
+            height: 8px;
+            background: #2F4F4F;
+            border-radius: 4px;
+            box-shadow: 15px 0 0 #2F4F4F;
+        }
+
+        .menu-board {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FFFACD;
+            padding: 20px;
+            border-radius: 15px;
+            border: 4px solid #8B4513;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .menu-board.show {
+            opacity: 1;
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 18px;
+            color: #654321;
+        }
+
+        .order-summary {
+            position: absolute;
+            background: #FFE4E1;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #FF69B4;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 200px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .rey-order {
+            bottom: 25%;
+            left: 10%;
+        }
+
+        .beny-order {
+            bottom: 5%;
+            right: 10%;
+        }
+
+        .total-summary {
+            position: absolute;
+            bottom: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #F0E68C;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #DAA520;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 250px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .total-summary.show {
+            opacity: 1;
+        }
+
+        .total-summary-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 15px;
+        }
+
+        .total-breakdown {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #654321;
+        }
+
+        .grand-total {
+            border-top: 3px solid #8B4513;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #8B0000;
+        }
+
+        .order-summary.show {
+            opacity: 1;
+        }
+
+        .order-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #8B0000;
+            margin-bottom: 15px;
+        }
+
+        .order-item {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #654321;
+        }
+
+        .total {
+            border-top: 2px solid #8B0000;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #8B0000;
+        }
+
+        .control-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.95);
+            padding: 4px;
+            border-radius: 6px;
+            border: 2px solid #8B4513;
+            max-width: 100px;
+            font-size: 9px;
+        }
+
+        .control-btn {
+            background: #FF6347;
+            color: white;
+            border: none;
+            padding: 3px 6px;
+            margin: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+            display: block;
+        }
+
+        .control-btn:hover {
+            background: #FF4500;
+        }
+
+        .control-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .walking {
+            animation: walk 0.5s infinite alternate;
+        }
+
+        @keyframes walk {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            100% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid #8B4513;
+            font-size: 14px;
+            color: #654321;
+            opacity: 0;
+            transition: opacity 0.5s;
+            max-width: 150px;
+            text-align: center;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        .rey-speech {
+            top: -80px;
+            left: -35px;
+        }
+
+        .beny-speech {
+            top: -80px;
+            left: -35px;
+        }
+
+
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="scene"><!-- Coffee Shop -->
+   <div class="coffee-shop">
+    <div class="shop-roof"></div>
+    <div class="shop-sign" id="shopName">
+     VN COFFEE SHOP
+    </div>
+    <div class="shop-window"></div>
+    <div class="shop-window"></div>
+    <div class="shop-door"></div>
+   </div><!-- Characters -->
+   <div class="character rey" id="rey">
+    <div class="character-head">
+     <div class="character-hair"></div>
+     <div class="character-eyes"></div>
+     <div class="character-nose"></div>
+     <div class="character-smile"></div>
+    </div>
+    <div class="character-body">
+     <div class="character-arms"></div>
+    </div>
+    <div class="character-legs"></div>
+    <div class="speech-bubble rey-speech" id="reySpeech">
+     Aku pesan satu donat dan satu susu, ya.
+    </div>
+   </div>
+   <div class="character beny" id="beny">
+    <div class="character-head">
+     <div class="character-hair"></div>
+     <div class="character-eyes"></div>
+     <div class="character-nose"></div>
+     <div class="character-smile"></div>
+    </div>
+    <div class="character-body">
+     <div class="character-arms"></div>
+    </div>
+    <div class="character-legs"></div>
+    <div class="speech-bubble beny-speech" id="benySpeech">
+     Kalau aku dua donat dan satu susu.
+    </div>
+   </div><!-- Menu Board -->
+   <div class="menu-board" id="menuBoard">
+    <div class="menu-title" id="menuTitle">
+     DAFTAR HARGA - VN COFFEE SHOP
+    </div>
+    <div class="menu-item"><span>🍩 Snack (Donat)</span> <span>Rp. 12.000</span>
+    </div>
+    <div class="menu-item"><span>🥛 Minuman (Susu)</span> <span>Rp. 25.000</span>
+    </div>
+   </div><!-- Total Summary -->
+   <div class="total-summary" id="totalSummary">
+    <div class="total-summary-title">
+     TOTAL PEMBAYARAN
+    </div>
+    <div class="total-breakdown">
+     Rey: Rp. 37.000
+    </div>
+    <div class="total-breakdown">
+     Beny: Rp. 49.000
+    </div>
+    <div class="grand-total">
+     Total Keseluruhan: Rp. 86.000
+    </div>
+   </div><!-- Cafe Table -->
+   <div class="cafe-table" id="cafeTable"></div><!-- Window Light -->
+   <div class="window-light" id="windowLight"></div><!-- Rey's Items -->
+   <div class="purchased-items rey-items" id="reyItems">
+    <div class="items-title">
+     BARANG REY
+    </div>
+    <div class="item-visual">
+     <div class="donut">
+      🍩
+     </div>
+     <div class="milk">
+      🥛
+     </div>
+    </div>
+    <div class="items-description" id="reyOrderText">
+     1 Donat + 1 Susu
+    </div>
+    <div class="items-price">
+     Total: Rp. 37.000
+    </div>
+   </div><!-- Beny's Items -->
+   <div class="purchased-items beny-items" id="benyItems">
+    <div class="items-title">
+     BARANG BENY
+    </div>
+    <div class="item-visual">
+     <div class="donut">
+      🍩
+     </div>
+     <div class="donut">
+      🍩
+     </div>
+     <div class="milk">
+      🥛
+     </div>
+    </div>
+    <div class="items-description" id="benyOrderText">
+     2 Donat + 1 Susu
+    </div>
+    <div class="items-price">
+     Total: Rp. 49.000
+    </div>
+   </div><!-- Rey's Order -->
+   <div class="order-summary rey-order" id="reyOrder">
+    <div class="order-title">
+     PESANAN REY
+    </div>
+    <div class="order-item">
+     🍩 1 Donat = Rp. 12.000
+    </div>
+    <div class="order-item">
+     🥛 1 Susu = Rp. 25.000
+    </div>
+    <div class="total">
+     Total Rey: Rp. 37.000
+    </div>
+   </div><!-- Beny's Order -->
+   <div class="order-summary beny-order" id="benyOrder">
+    <div class="order-title">
+     PESANAN BENY
+    </div>
+    <div class="order-item">
+     🍩 2 Donat = Rp. 24.000
+    </div>
+    <div class="order-item">
+     🥛 1 Susu = Rp. 25.000
+    </div>
+    <div class="total">
+     Total Beny: Rp. 49.000
+    </div>
+   </div><!-- Control Panel -->
+   <div class="control-panel">
+    <div style="margin-bottom: 2px; font-weight: bold; color: #8B4513; font-size: 8px;">
+     Kontrol:
+    </div><button class="control-btn" id="startBtn" onclick="startAnimation()">Mulai</button> <button class="control-btn" id="resetBtn" onclick="resetAnimation()">Reset</button>
+   </div>
+  </main>
+  <script>
+        let animationStep = 0;
+        let isAnimating = false;
+
+        const defaultConfig = {
+            shop_name: "VN COFFEE SHOP",
+            rey_order: "1 Donat + 1 Susu",
+            beny_order: "2 Donat + 1 Susu",
+            background_color: "#FF8C69",
+            shop_color: "#2C1810",
+            rey_shirt_color: "#808080",
+            beny_shirt_color: "#87CEEB",
+            menu_background: "#FFFACD"
+        };
+
+        async function onConfigChange(config) {
+            const shopName = config.shop_name || defaultConfig.shop_name;
+            const reyOrder = config.rey_order || defaultConfig.rey_order;
+            const benyOrder = config.beny_order || defaultConfig.beny_order;
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const shopColor = config.shop_color || defaultConfig.shop_color;
+            const reyShirtColor = config.rey_shirt_color || defaultConfig.rey_shirt_color;
+            const benyShirtColor = config.beny_shirt_color || defaultConfig.beny_shirt_color;
+            const menuBackground = config.menu_background || defaultConfig.menu_background;
+
+            document.getElementById('shopName').textContent = shopName;
+            document.getElementById('menuTitle').textContent = `DAFTAR HARGA - ${shopName}`;
+            document.getElementById('reyOrderText').textContent = reyOrder;
+            document.getElementById('benyOrderText').textContent = benyOrder;
+            
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #FFB347 50%, #FFA500 100%)`;
+            document.querySelector('.coffee-shop').style.background = `linear-gradient(145deg, ${shopColor}, #3E2723)`;
+            document.querySelector('.rey .character-body').style.background = `linear-gradient(145deg, ${reyShirtColor}, #A9A9A9)`;
+            document.querySelector('.beny .character-body').style.background = `linear-gradient(145deg, ${benyShirtColor}, #4682B4)`;
+            document.querySelector('.menu-board').style.background = menuBackground;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.shop_color || defaultConfig.shop_color,
+                        set: (value) => {
+                            config.shop_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ shop_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.rey_shirt_color || defaultConfig.rey_shirt_color,
+                        set: (value) => {
+                            config.rey_shirt_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ rey_shirt_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.beny_shirt_color || defaultConfig.beny_shirt_color,
+                        set: (value) => {
+                            config.beny_shirt_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ beny_shirt_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.menu_background || defaultConfig.menu_background,
+                        set: (value) => {
+                            config.menu_background = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ menu_background: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["shop_name", config.shop_name || defaultConfig.shop_name],
+                ["rey_order", config.rey_order || defaultConfig.rey_order],
+                ["beny_order", config.beny_order || defaultConfig.beny_order]
+            ]);
+        }
+
+        async function startAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            document.getElementById('startBtn').disabled = true;
+            
+            const rey = document.getElementById('rey');
+            const beny = document.getElementById('beny');
+            const reySpeech = document.getElementById('reySpeech');
+            const benySpeech = document.getElementById('benySpeech');
+            const totalSummary = document.getElementById('totalSummary');
+            const cafeTable = document.getElementById('cafeTable');
+            const windowLight = document.getElementById('windowLight');
+            const reyItems = document.getElementById('reyItems');
+            const benyItems = document.getElementById('benyItems');
+
+            // Step 1: Characters walk to coffee shop
+            rey.classList.add('walking');
+            beny.classList.add('walking');
+            
+            setTimeout(() => {
+                rey.style.left = '35%';
+                beny.style.left = '45%';
+            }, 100);
+
+            // Step 2: Show Rey's speech
+            setTimeout(() => {
+                rey.classList.remove('walking');
+                beny.classList.remove('walking');
+                reySpeech.classList.add('show');
+            }, 2500);
+
+            // Step 3: Show Beny's speech
+            setTimeout(() => {
+                reySpeech.classList.remove('show');
+                benySpeech.classList.add('show');
+            }, 4000);
+
+            // Step 4: Show purchased items
+            setTimeout(() => {
+                benySpeech.classList.remove('show');
+                reyItems.classList.add('show');
+                benyItems.classList.add('show');
+            }, 5500);
+
+            // Step 5: Show total summary
+            setTimeout(() => {
+                totalSummary.classList.add('show');
+            }, 7000);
+
+            // Step 6: Characters move to table
+            setTimeout(() => {
+                rey.style.left = '50%';
+                beny.style.left = '60%';
+                rey.style.bottom = '15%';
+                beny.style.bottom = '15%';
+                cafeTable.classList.add('show');
+            }, 8500);
+
+            // Step 7: Show window light (ending scene)
+            setTimeout(() => {
+                windowLight.classList.add('show');
+                isAnimating = false;
+                document.getElementById('startBtn').disabled = false;
+            }, 10000);
+        }
+
+        function resetAnimation() {
+            if (isAnimating) return;
+            
+            const rey = document.getElementById('rey');
+            const beny = document.getElementById('beny');
+            const reySpeech = document.getElementById('reySpeech');
+            const benySpeech = document.getElementById('benySpeech');
+            const totalSummary = document.getElementById('totalSummary');
+            const cafeTable = document.getElementById('cafeTable');
+            const windowLight = document.getElementById('windowLight');
+            const reyItems = document.getElementById('reyItems');
+            const benyItems = document.getElementById('benyItems');
+            // Reset positions
+            rey.style.left = '5%';
+            beny.style.left = '15%';
+            rey.style.bottom = '25%';
+            beny.style.bottom = '25%';
+            
+            // Hide all elements
+            rey.classList.remove('walking');
+            beny.classList.remove('walking');
+            reySpeech.classList.remove('show');
+            benySpeech.classList.remove('show');
+            totalSummary.classList.remove('show');
+            cafeTable.classList.remove('show');
+            windowLight.classList.remove('show');
+            reyItems.classList.remove('show');
+            benyItems.classList.remove('show');
+            
+            animationStep = 0;
+        }
+
+
+
+        // Initialize SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9981d57235e49b91',t:'MTc2MjA2NzY1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
